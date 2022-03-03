@@ -124,7 +124,7 @@
 	//======================================================================
 
 	function generateRandomString(length) {
-		var result = $.map(getCandidatesList(length), function(candidates, index) {
+		var result = getCandidatesList(length).map(function(candidates, index) {
 			if (! candidates) throw 'ERROR: no candidate.';
 			return selectRandomly(candidates);
 		}).join('');
