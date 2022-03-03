@@ -206,6 +206,17 @@
 		elemOfResult.addEventListener('click', () => selectResult());
 		Array.from(document.querySelectorAll('#button_selectall'))
 			.forEach(elem => elem.addEventListener('click', () => selectResult()));
+		let isFailedToCopyToClipboard = false;
+		Array.from(document.querySelectorAll('#button_copy_to_clipboard'))
+			.forEach(elem => elem.addEventListener('click', () => {
+				if (isFailedToCopyToClipboard) return;
+				navigator.clipboard.writeText(elemOfResult.value)
+					.then(() => {}, err => {
+						console.err('can not write to clipboard');
+						console.err(err);
+						isFailedToCopyToClipboard = true;
+					});
+			}));
 
 		updateResult();
 		console.log('DEBUG: ready.');
