@@ -137,34 +137,12 @@ $(function() {
 		return result;
 	}
 
-	function isMatchingToConstraint(text) {
-		if (! text) throw 'invalid argument';
-		var candidatesList = getCandidatesList(text.length);
-		var isMatching = ! $.grep(candidatesList, function(candidates, index) {
-			return -1 === candidates.indexOf(text.charAt(index));
-		}).length;
-		return isMatching;
-	}
-
 	function updateResultIfNecessary() {
 		var length = $('#field_length').val();
 		if (! length) throw 'ERROR: invalid length';
 		if (length < 0) throw 'ERROR: length must be positive';
 
-		var text = $('#field_result').val();
-
-		if (text && (text.length < length)) {
-			text = '';
-		}
-
-		if (text && (text.length > length)) {
-			text = text.substring(0, length);
-		}
-
-		if (text && ! isMatchingToConstraint(text)) {
-			text = '';
-		}
-
+		var text = '';
 		if (! text) {
 			try {
 				text = generateRandomString(length);
