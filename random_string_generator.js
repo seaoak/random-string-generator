@@ -63,7 +63,7 @@
 		const elem = document.querySelector('#checkbox_alphabet_only_at_firstlast');
 		if (!elem) throw new Error('"#checkbox_alphabet_only_at_firstlast" is not found');
 		if (elem.checked) {
-			candidates = candidates.replace(/[^A-Za-z]/g, '');
+			candidates = candidates.replace(/[^A-Z]/g, '');
 		}
 		console.log('DEBUG: candidates = ' + candidates);
 		return candidates;
