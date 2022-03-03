@@ -3,7 +3,8 @@
 //
 //  - This program is provided under the MIT License (the X11 License)
 //
-$(function() {
+(function() {
+	'use strict';
 
 	//======================================================================
 	// utilities
@@ -163,7 +164,7 @@ $(function() {
 	//======================================================================
 	// main
 	//======================================================================
-	(function() {
+	function initialize() {
 		$('#checkbox_sign').change(function(event) {
 			$('#fieldset_sign').prop('disabled', ! $('#checkbox_sign').prop('checked'));
 		});
@@ -191,5 +192,11 @@ $(function() {
 
 		updateResult();
 		console.log('DEBUG: ready.');
-	})();
-});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initialize);
+	} else {
+		initialize();
+	}
+})();
