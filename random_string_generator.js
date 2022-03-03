@@ -137,7 +137,7 @@ $(function() {
 		return result;
 	}
 
-	function updateResultIfNecessary() {
+	function updateResult() {
 		var length = $('#field_length').val();
 		if (! length) throw 'ERROR: invalid length';
 		if (length < 0) throw 'ERROR: length must be positive';
@@ -160,11 +160,6 @@ $(function() {
 		console.log('DEBUG: update.');
 	}
 
-	function updateResult() {
-		$('#field_result').val('');
-		updateResultIfNecessary();
-	}
-
 	//======================================================================
 	// main
 	//======================================================================
@@ -173,18 +168,18 @@ $(function() {
 		$('#checkbox_sign').change(function(event) {
 			$('#fieldset_sign').prop('disabled', ! $('#checkbox_sign').prop('checked'));
 		});
-		$('#field_length').change(updateResultIfNecessary);
+		$('#field_length').change(updateResult);
 		$('#fieldset_typical_length button').click(function(event) {
 			var length = this.id.substring('button_length'.length);
 			$('#field_length').val(length);
-			updateResultIfNecessary();
+			updateResult();
 		});
-		$('#fieldset_to_narrow input').change(updateResultIfNecessary);
+		$('#fieldset_to_narrow input').change(updateResult);
 		$('#fieldset_to_widen input').change(function(event) {
 			if ($(this).prop('checked')) {
 				updateResult();
 			} else {
-				updateResultIfNecessary();
+				updateResult();
 			}
 		});
 		$('#button_refresh').click(updateResult);
