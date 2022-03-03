@@ -18,7 +18,7 @@
 		for (let i=0; i<length; i++) {
 			list.push(code + i);
 		}
-		return String.fromCharCode.apply(null, list);
+		return String.fromCharCode(...list);
 	}
 
 	//======================================================================
