@@ -139,26 +139,30 @@
 	}
 
 	function updateResult() {
-		var length = $('#field_length').val();
-		if (! length) throw 'ERROR: invalid length';
-		if (length < 0) throw 'ERROR: length must be positive';
+		const elemOfResult = document.querySelector('#field_result');
+		if (!elemOfResult) throw new Error('"#field_result" is not found');
+		const elemOfLength = document.querySelector('#field_length');
+		if (!elemOfLength) throw new Error('"#field_length" is not found');
+		try {
+			const length = elemOfLength.value;
+			if (!length) throw 'ERROR: invalid length';
+			if (!/^[1-9][0-9]*$/.test(length)) throw 'ERROR: invalid length';
 
-		var text = '';
-		if (! text) {
-			try {
-				text = generateRandomString(length);
-			} catch(err) {
-				if ('' + err !== 'ERROR: no candidate.') throw err;
-				console.log(err);
-				text = '' + err;
-				$('#field_result').val(text).css('color', 'Red').prop('disabled', true);
-				return;
-			}
+			const text = generateRandomString(length);
+			elemOfResult.value = text;
+			elemOfResult.style.color = '';
+			elemOfResult.disabled = false;
+			elemOfResult.focus();
+			elemOfResult.select();
+			console.log('DEBUG: update.');
+		} catch(err) {
+			console.error(err);
+			const text = '' + err;
+			elemOfResult.value = text;
+			elemOfResult.style.color = 'Red';
+			elemOfResult.disabled = true;
+			return;
 		}
-
-		$('#field_result').val(text).css('color', '').prop('disabled', false);
-		$('#field_result').select();
-		console.log('DEBUG: update.');
 	}
 
 	//======================================================================
