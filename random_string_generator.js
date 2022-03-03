@@ -10,24 +10,6 @@
 	// utilities
 	//======================================================================
 
-	function noopFalse() {
-		return false;
-	}
-
-	function selectRandomly(candidates) {
-		if (! candidates) throw 'invalid argument';
-		if (typeof(candidates.length) !== 'number') throw 'invalid argument';
-		if (candidates.length <= 0) throw 'invalid argument';
-		var index = Math.floor(Math.random() * candidates.length);
-		if (typeof(candidates) === 'string') {
-			return candidates.charAt(index);
-		} else if (typeof(candidates) === 'object') {
-			return candidates[index];
-		} else {
-			throw 'invalid argument';
-		}
-	}
-
 	function getCharSequence(firstCharacter, length) {
 		if (! firstCharacter) throw 'invalid argument';
 		if (! length) throw 'invalid argument';
