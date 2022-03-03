@@ -131,11 +131,13 @@
 			if (!elem2) throw new Error('"#checkbox_number" is not found');
 			return (elem1.checked && elem2.checked) ? Math.floor(length * 0.1) : 0;
 		})();
+		const randomList = new Uint32Array(length);
 		let count = 0;
 		while (count++ < 100) {
+			crypto.getRandomValues(randomList);
 			var result = getCandidatesList(length).map(function(candidates, index) {
 				if (! candidates) throw 'ERROR: no candidate.';
-				return selectRandomly(candidates);
+				return candidates.charAt(Math.floor(candidates.length * (randomList[index] / 0xffffffff)));
 			}).join('');
 			if (result.replace(/[^0-9]/g, '').length < requiredNumberOfNumber) continue; // retry
 			return result;
