@@ -174,10 +174,9 @@
 			updateResult();
 			elemOfLength.focus(); // get focus back
 		});
-		Array.from(document.querySelectorAll('#fieldset_typical_length button'))
+		Array.from(document.querySelectorAll('.button_length'))
 			.forEach(elem => elem.addEventListener('click', () => {
-				const length = elem.id.substring('button_length'.length);
-				elemOfLength.value = length;
+				elemOfLength.value = elem.value;
 				updateResult();
 			}));
 		Array.from(document.querySelectorAll('#fieldset_to_narrow input'))
