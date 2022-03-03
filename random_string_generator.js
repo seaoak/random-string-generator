@@ -69,33 +69,23 @@
 	function getCandidatesForMiddle() {
 		var candidates = '';
 
-		if ($('#checkbox_uppercase').prop('checked')) {
-			candidates += getCharSequence('A', 26);
-			console.log('DEBUG: candidates = ' + candidates);
-			if (candidates.charAt(candidates.length - 1) !== 'Z') throw 'Assertion failed';
-		}
-
-		if ($('#checkbox_lowercase').prop('checked')) {
-			candidates += getCharSequence('a', 26);
-			console.log('DEBUG: candidates = ' + candidates);
-			if (candidates.charAt(candidates.length - 1) !== 'z') throw 'Assertion failed';
-		}
-
-		if ($('#checkbox_number').prop('checked')) {
-			candidates += getCharSequence('0', 10);
-			console.log('DEBUG: candidates = ' + candidates);
-			if (candidates.charAt(candidates.length - 1) !== '9') throw 'Assertion failed';
-		}
-
-		if ($('#checkbox_sign').prop('checked')) {
-			$('#fieldset_sign input').each(function(index, elem) {
-				if ($(elem).prop('checked')) {
-					var text = $(elem.parentNode).text();
-					candidates += text.charAt(text.length - 2);
-				}
+		Array.from(document.querySelectorAll('#checkbox_uppercase'))
+			.filter(elem => elem.checked)
+			.forEach(_ => candidates += getCharSequence('A', 26));
+		Array.from(document.querySelectorAll('#checkbox_lowercase'))
+			.filter(elem => elem.checked)
+			.forEach(_ => candidates += getCharSequence('a', 26));
+		Array.from(document.querySelectorAll('#checkbox_number'))
+			.filter(elem => elem.checked)
+			.forEach(_ => candidates += getCharSequence('0', 10));
+		Array.from(document.querySelectorAll('#checkbox_sign'))
+			.filter(elem => elem.checked)
+			.forEach(_ => {
+				Array.from(document.querySelectorAll('#fieldset_sign input'))
+					.filter(elem => elem.checked)
+					.map(elem => elem.parentNode.innerText.slice(-2, -1)) // only 1 character
+					.forEach(s => candidates += s);
 			});
-			console.log('DEBUG: candidates = ' + candidates);
-		}
 
 		candidates = filterToAvoidMisreading(candidates);
 
