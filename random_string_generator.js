@@ -37,7 +37,6 @@
 				candidates = candidates.replace(regexp, '');
 			}
 		}
-		console.log('DEBUG: candidates = ' + candidates);
 		return candidates;
 	}
 
@@ -47,7 +46,6 @@
 		if (elem.checked) {
 			candidates = candidates.replace(/[^A-Z]/g, '');
 		}
-		console.log('DEBUG: candidates = ' + candidates);
 		return candidates;
 	}
 
@@ -143,7 +141,6 @@
 			elemOfResult.disabled = false;
 			elemOfResult.focus();
 			elemOfResult.select();
-			console.log('DEBUG: update.');
 		} catch(err) {
 			console.error(err);
 			const text = '' + err;
@@ -203,7 +200,6 @@
 			}));
 
 		updateResult();
-		console.log('DEBUG: ready.');
 	}
 
 	if (document.readyState === 'loading') {
