@@ -116,29 +116,6 @@
 			}
 			candidatesList.push(getCandidatesForLast());
 		}
-
-		const elem = document.querySelector('#checkbox_number_required_at_least');
-		if (!elem) throw new Error('"#checkbox_number_required_at_least" is not found');
-		if (elem.checked) {
-			const indices = candidatesList.map((_, i) => i); // list of index
-			const elem = document.querySelector('#checkbox_alphabet_only_at_firstlast');
-			if (!elem) throw new Error('"#checkbox_alphabet_only_at_firstlast" is not found');
-			if (elem.checked) {
-				indices.shift(); // exclude first character
-				indices.pop(); // exclude last character
-			}
-			const modified = [];
-			let count = Math.floor(candidatesList.length * 0.1);
-			while (count > 0) {
-				const index = selectRandomly(indices);
-				if (modified.includes(index)) continue;
-				modified.push(index);
-				candidatesList[index] = candidatesList[index].replace(/[^0-9]/g, ''); // allow number only
-				count--;
-			}
-			console.debug(modified);
-		}
-
 		return candidatesList;
 	}
 
@@ -147,11 +124,23 @@
 	//======================================================================
 
 	function generateRandomString(length) {
-		var result = getCandidatesList(length).map(function(candidates, index) {
-			if (! candidates) throw 'ERROR: no candidate.';
-			return selectRandomly(candidates);
-		}).join('');
-		return result;
+		const requiredNumberOfNumber = (() => {
+			const elem1 = document.querySelector('#checkbox_number_required_at_least');
+			if (!elem1) throw new Error('"#checkbox_number_required_at_least" is not found');
+			const elem2 = document.querySelector('#checkbox_number');
+			if (!elem2) throw new Error('"#checkbox_number" is not found');
+			return (elem1.checked && elem2.checked) ? Math.floor(length * 0.1) : 0;
+		})();
+		let count = 0;
+		while (count++ < 100) {
+			var result = getCandidatesList(length).map(function(candidates, index) {
+				if (! candidates) throw 'ERROR: no candidate.';
+				return selectRandomly(candidates);
+			}).join('');
+			if (result.replace(/[^0-9]/g, '').length < requiredNumberOfNumber) continue; // retry
+			return result;
+		}
+		throw new Error('too many retries');
 	}
 
 	function updateResult() {
