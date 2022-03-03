@@ -116,6 +116,29 @@
 			}
 			candidatesList.push(getCandidatesForLast());
 		}
+
+		const elem = document.querySelector('#checkbox_number_required_at_least');
+		if (!elem) throw new Error('"#checkbox_number_required_at_least" is not found');
+		if (elem.checked) {
+			const indices = candidatesList.map((_, i) => i); // list of index
+			const elem = document.querySelector('#checkbox_alphabet_only_at_firstlast');
+			if (!elem) throw new Error('"#checkbox_alphabet_only_at_firstlast" is not found');
+			if (elem.checked) {
+				indices.shift(); // exclude first character
+				indices.pop(); // exclude last character
+			}
+			const modified = [];
+			let count = Math.floor(candidatesList.length * 0.1);
+			while (count > 0) {
+				const index = selectRandomly(indices);
+				if (modified.includes(index)) continue;
+				modified.push(index);
+				candidatesList[index] = candidatesList[index].replace(/[^0-9]/g, ''); // allow number only
+				count--;
+			}
+			console.debug(modified);
+		}
+
 		return candidatesList;
 	}
 
