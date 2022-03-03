@@ -44,22 +44,25 @@
 	//======================================================================
 
 	function filterToAvoidMisreading(candidates) {
-		if ($('#checkbox_avoid_misreading').prop('checked')) {
-			var targetList = $('#checkbox_avoid_misreading').parent().text().match(/\u2018.\u2019/g);
-			if (! targetList) throw 'unexpected HTML.';
-			var excludedCharList = $.map(targetList, function(elem, index) {
-				return elem.charAt(1);
-			});
-			console.log('DEBUG: excludedCharList = ' + excludedCharList.join(':'));
-			var regexp = new RegExp('[' + excludedCharList.join('') + ']', 'g');
-			candidates = candidates.replace(regexp, '');
+		const elem = document.querySelector('#checkbox_avoid_misreading');
+		if (!elem) throw new Error('"#checkbox_avoid_misreading" is not found');
+		if (elem.checked) {
+			const excludedChars = Array.from(elem.parentNode.innerText.match(/\u2018.\u2019/g))
+				.map(str => str.charAt(1))
+				.join('');
+			if (excludedChars) {
+				const regexp = new RegExp('[' + excludedChars + ']', 'g');
+				candidates = candidates.replace(regexp, '');
+			}
 		}
 		console.log('DEBUG: candidates = ' + candidates);
 		return candidates;
 	}
 
 	function filterToAlphabetOnlyAtFirstLast(candidates) {
-		if ($('#checkbox_alphabet_only_at_firstlast').prop('checked')) {
+		const elem = document.querySelector('#checkbox_alphabet_only_at_firstlast');
+		if (!elem) throw new Error('"#checkbox_alphabet_only_at_firstlast" is not found');
+		if (elem.checked) {
 			candidates = candidates.replace(/[^A-Za-z]/g, '');
 		}
 		console.log('DEBUG: candidates = ' + candidates);
