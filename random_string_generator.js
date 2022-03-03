@@ -87,7 +87,6 @@
 		return getCandidatesForFirst();
 	}
 
-
 	function getCandidatesList(length) {
 		const candidatesList = [getCandidatesForFirst()];
 		if (length > 1) {
