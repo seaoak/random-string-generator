@@ -1,4 +1,4 @@
-//                                                copyright Seaoak, 2012-2017
+//                                                copyright Seaoak, 2012-2022
 //                                                          https://seaoak.jp
 //
 //  - This program is provided under the MIT License (the X11 License)
