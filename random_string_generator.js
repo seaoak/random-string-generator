@@ -177,7 +177,10 @@
 			}));
 		const elemOfLength = document.querySelector('#field_length');
 		if (!elemOfLength) throw new Error('"#field_length" is not found');
-		elemOfLength.addEventListener('input', () => updateResult());
+		elemOfLength.addEventListener('input', () => {
+			updateResult();
+			elemOfLength.focus(); // get focus back
+		});
 		Array.from(document.querySelectorAll('#fieldset_typical_length button'))
 			.forEach(elem => elem.addEventListener('click', () => {
 				const length = elem.id.substring('button_length'.length);
