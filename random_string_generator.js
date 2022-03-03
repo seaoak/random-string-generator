@@ -165,30 +165,36 @@
 	// main
 	//======================================================================
 	function initialize() {
-		$('#checkbox_sign').change(function(event) {
-			$('#fieldset_sign').prop('disabled', ! $('#checkbox_sign').prop('checked'));
-		});
-		$('#field_length').change(updateResult);
-		$('#fieldset_typical_length button').click(function(event) {
-			var length = this.id.substring('button_length'.length);
-			$('#field_length').val(length);
-			updateResult();
-		});
-		$('#fieldset_to_narrow input').change(updateResult);
-		$('#fieldset_to_widen input').change(function(event) {
-			if ($(this).prop('checked')) {
+		Array.from(document.querySelectorAll('#checkbox_sign'))
+			.forEach(elem => elem.addEventListener('input', () => {
+				Array.from(document.querySelectorAll('#fieldset_sign'))
+					.forEach(e => e.disabled = !elem.checked);
 				updateResult();
-			} else {
+			}));
+		const elemOfLength = document.querySelector('#field_length');
+		if (!elemOfLength) throw new Error('"#field_length" is not found');
+		elemOfLength.addEventListener('input', () => updateResult());
+		Array.from(document.querySelectorAll('#fieldset_typical_length button'))
+			.forEach(elem => elem.addEventListener('click', () => {
+				const length = elem.id.substring('button_length'.length);
+				elemOfLength.value = length;
 				updateResult();
-			}
-		});
-		$('#button_refresh').click(updateResult);
-		$('#button_selectall').click(function(event) {
-			$('#field_result').select();
-		});
-		$('#field_result').click(function(event) {
-			this.select();
-		});
+			}));
+		Array.from(document.querySelectorAll('#fieldset_to_narrow input'))
+			.forEach(elem => elem.addEventListener('input', () => updateResult()));
+		Array.from(document.querySelectorAll('#fieldset_to_widen input'))
+			.forEach(elem => elem.addEventListener('input', () => updateResult()));
+		Array.from(document.querySelectorAll('#button_refresh'))
+			.forEach(elem => elem.addEventListener('click', () => updateResult()));
+		const elemOfResult = document.querySelector('#field_result');
+		if (!elemOfResult) throw new Error('"#field_result" is not found');
+		const selectResult = () => {
+			elemOfResult.focus();
+			elemOfResult.select();
+		};
+		elemOfResult.addEventListener('click', () => selectResult());
+		Array.from(document.querySelectorAll('#button_selectall'))
+			.forEach(elem => elem.addEventListener('click', () => selectResult()));
 
 		updateResult();
 		console.log('DEBUG: ready.');
