@@ -13,9 +13,9 @@
 	function getCharSequence(firstCharacter, length) {
 		if (! firstCharacter) throw 'invalid argument';
 		if (! length) throw 'invalid argument';
-		var code = firstCharacter.charCodeAt(0);
-		var list = [];
-		for (var i=0; i<length; i++) {
+		const code = firstCharacter.charCodeAt(0);
+		const list = [];
+		for (let i=0; i<length; i++) {
 			list.push(code + i);
 		}
 		return String.fromCharCode.apply(null, list);
@@ -52,7 +52,7 @@
 	}
 
 	function getCandidatesForMiddle() {
-		var candidates = '';
+		let candidates = '';
 
 		Array.from(document.querySelectorAll('#checkbox_uppercase'))
 			.filter(elem => elem.checked)
@@ -79,7 +79,7 @@
 	}
 
 	function getCandidatesForFirst() {
-		var candidates = getCandidatesForMiddle();
+		let candidates = getCandidatesForMiddle();
 		candidates = filterToAlphabetOnlyAtFirstLast(candidates);
 		console.log('DEBUG: candidates = ' + candidates);
 		return candidates;
@@ -91,9 +91,9 @@
 
 
 	function getCandidatesList(length) {
-		var candidatesList = [getCandidatesForFirst()];
+		const candidatesList = [getCandidatesForFirst()];
 		if (length > 1) {
-			for (var i=1; i<length-1; i++) {
+			for (let i=1; i<length-1; i++) {
 				candidatesList.push(getCandidatesForMiddle());
 			}
 			candidatesList.push(getCandidatesForLast());
@@ -117,7 +117,7 @@
 		let count = 0;
 		while (count++ < 100) {
 			crypto.getRandomValues(randomList);
-			var result = getCandidatesList(length).map(function(candidates, index) {
+			const result = getCandidatesList(length).map(function(candidates, index) {
 				if (! candidates) throw 'ERROR: no candidate.';
 				return candidates.charAt(Math.floor(candidates.length * (randomList[index] / 0xffffffff)));
 			}).join('');
