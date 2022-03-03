@@ -164,7 +164,6 @@ $(function() {
 	// main
 	//======================================================================
 	(function() {
-		$('form').submit(noopFalse); // disable SUBMIT action by the ENTER key
 		$('#checkbox_sign').change(function(event) {
 			$('#fieldset_sign').prop('disabled', ! $('#checkbox_sign').prop('checked'));
 		});
