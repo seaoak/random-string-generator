@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+* {
+}
+
+a {
+	text-decoration:		none;
+}
+
+a:hover,
+a:active {
+	text-decoration:		underline;
+}
+
+label:after {
+	white-space:			pre;
+	content:				"\A";
+}
+
+label:hover {
+	cursor:					pointer;
+	color:					#003399;
+	background-color:		#f3f9ff;
+}
+
+fieldset:disabled label:hover {
+	cursor:					auto;
+	color:					inherit;
+	background-color:		transparent;
+}
+
+fieldset:disabled {
+	color:					#999999;
+}
+
+fieldset {
+	border:					none;
+}
