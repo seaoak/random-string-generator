@@ -116,7 +116,7 @@
 			crypto.getRandomValues(randomList);
 			const result = getCandidatesList(length).map(function(candidates, index) {
 				if (! candidates) throw 'ERROR: no candidate.';
-				return candidates.charAt(Math.floor(candidates.length * (randomList[index] / 0xffffffff)));
+				return candidates.charAt(randomList[index] % candidates.length);
 			}).join('');
 			if (result.replace(/[^0-9]/g, '').length < requiredNumberOfNumber) continue; // retry
 			return result;
